@@ -1,4 +1,4 @@
-# Protein AA comparison
+# AA-protein-compare
 AA-protein-compare è un'app interattiva per analizzare e confrontare la composizione amminoacidica di più proteine a partire dai codici AC Uniprot (AC) (https://www.uniprot.org/)
 
 L’app:
