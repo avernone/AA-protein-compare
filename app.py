@@ -72,8 +72,8 @@ if ac_input:
     freq_df = pd.DataFrame(results).fillna(0)
     ratio_df = pd.DataFrame(ratio_results).T
 
-    # --- Sort amino acids alphabetically ---
-    freq_df = freq_df.sort_index()  # ordina le righe (amminoacidi) in ordine A-Z
+    # --- Sort alphabetically (A-Z) ---
+    freq_df = freq_df.sort_index()
 
     # --- Visualization ---
     st.subheader("Amino Acid Frequencies (sorted A–Z)")
@@ -82,39 +82,58 @@ if ac_input:
     st.subheader("Specific Amino Acid Ratios")
     st.dataframe(ratio_df)
 
-    # --- Plot ---
-    st.subheader("Bar Plot Comparison (A–Z)")
-    fig, ax = plt.subplots(figsize=(10, 5))
-    freq_df.plot(kind="bar", ax=ax)
+    # --- Plot 1: Amino Acid Frequencies ---
+    st.subheader("Bar Plot: Amino Acid Frequencies (A–Z)")
+    fig1, ax1 = plt.subplots(figsize=(10, 5))
+    freq_df.plot(kind="bar", ax=ax1)
     plt.xlabel("Amino acid")
     plt.ylabel("Relative frequency")
     plt.legend(title="Protein (Entry name)")
     plt.xticks(rotation=0)
-    st.pyplot(fig)
+    st.pyplot(fig1)
+
+    # --- Plot 2: Specific Ratios ---
+    st.subheader("Bar Plot: Specific Amino Acid Ratios")
+    fig2, ax2 = plt.subplots(figsize=(8, 5))
+    ratio_df.plot(kind="bar", ax=ax2)
+    plt.xlabel("Ratio type")
+    plt.ylabel("Value")
+    plt.legend(title="Protein (Entry name)")
+    plt.xticks(rotation=0)
+    st.pyplot(fig2)
 
     # --- Excel download ---
     st.subheader("📊 Download Results (Excel)")
 
     output = BytesIO()
     with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-        # Write sorted tables
+        # Write tables
         freq_df.to_excel(writer, sheet_name="AminoAcidFrequencies")
         ratio_df.to_excel(writer, sheet_name="SpecificRatios")
 
-        # Export the sorted plot to Excel
-        figfile = BytesIO()
-        fig.savefig(figfile, format="png", bbox_inches="tight")
-        figfile.seek(0)
+        # Save first plot (frequencies)
+        figfile1 = BytesIO()
+        fig1.savefig(figfile1, format="png", bbox_inches="tight")
+        figfile1.seek(0)
 
-        worksheet = writer.sheets["AminoAcidFrequencies"]
-        worksheet.insert_image("K2", "barplot.png", {"image_data": figfile})
+        # Save second plot (ratios)
+        figfile2 = BytesIO()
+        fig2.savefig(figfile2, format="png", bbox_inches="tight")
+        figfile2.seek(0)
+
+        # Insert plots in respective sheets
+        worksheet1 = writer.sheets["AminoAcidFrequencies"]
+        worksheet1.insert_image("K2", "freq_plot.png", {"image_data": figfile1})
+
+        worksheet2 = writer.sheets["SpecificRatios"]
+        worksheet2.insert_image("H2", "ratio_plot.png", {"image_data": figfile2})
 
     excel_data = output.getvalue()
 
     st.download_button(
-        label="⬇️ Download Excel file (sorted A–Z)",
+        label="⬇️ Download Excel file (with plots)",
         data=excel_data,
-        file_name="UniProt_comparison_results_sorted.xlsx",
+        file_name="UniProt_comparison_results_with_plots.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
