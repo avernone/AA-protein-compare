@@ -1,11 +1,11 @@
 # AA-protein-compare
-# 🧬 UniProt Protein Comparison App
+# UniProt Protein Comparison App
 
 ### Comparative analysis of amino acid composition and residue-specific ratios across UniProt protein sequences
 
 ---
 
-## 🔍 Overview
+## Overview
 
 This web application, **fully developed in Python** and **deployed on Streamlit Cloud**, enables researchers to **compare the amino acid composition** and **specific residue ratios** (E/Q, E/P, Y/F, D/N, G/S) across multiple protein sequences retrieved from the [UniProt](https://www.uniprot.org/) database.
 
@@ -15,40 +15,25 @@ The app provides:
 - **Comparative bar plots** for visual inspection of amino acid distribution  
 - A downloadable **Excel file** including all tables and plots  
 
-This tool facilitates **rapid exploratory analysis** of protein sequence composition using direct integration with UniProt REST APIs.
+In this Lab, the effect of amino acid availability as regulating factor of every protein synthesis is investigated
 
----
+Research papers:
 
-## ⚙️ Implementation and Methodology
+**The analysis of glutamate and glutamine frequencies in human proteins as marker of tissue oxygenation**, PMID: 31183125 R Soc Open Sci. 2019 Apr; 6(4): 181891, Published online 2019 Apr 10, doi: 10.1098/rsos.181891 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6502398/)
 
-The application is implemented in **Python 3.11** using:
+**Human Protein Cluster Analysis Using Amino Acid Frequencies**, PMID: 23593177 PLoS One. 2013; 8(4): e60220, Published online 2013 Apr 4, doi: 10.1371/journal.pone.0060220 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3617222/)
 
-| Library | Function |
-|----------|-----------|
-| `streamlit` | Interactive web interface |
-| `requests` | UniProt REST API access |
-| `pandas` | Data processing and table handling |
-| `matplotlib` | Comparative bar plot generation |
-| `XlsxWriter` | Excel export with embedded graphics |
+Contributors:
 
-For each UniProt Accession Code (AC) provided by the user, the app:
-1. Fetches the **FASTA sequence** and **metadata** from the UniProt REST API.  
-2. Computes amino acid counts and relative frequencies.  
-3. Calculates specific amino acid ratios (E/Q, E/P, Y/F, D/N, G/S).  
-4. Aggregates results into `pandas` DataFrames.  
-5. Displays sortable tables and bar plots (amino acids sorted alphabetically A–Z).  
-6. Exports all results to an Excel file using `XlsxWriter`.
+**Gianpiero Pescarmona**
 
----
+Formerly Department of Oncology, University of Torino
 
-## 🧠 Scientific Rationale
+**Francesca Silvagno**
 
-Residue composition and residue-specific ratios (e.g., E/Q, D/N) can reflect:
-- Differences in **protein stability** and **structure**  
-- **Evolutionary adaptations** to environmental or functional constraints  
-- **Homology-based variations** across species  
+Department of Oncology, University of Torino
 
-This tool enables **rapid quantitative comparisons** without the need for advanced bioinformatics software, ideal for **teaching**, **exploratory research**, and **preliminary data inspection**.
+**Annamaria Vernone**
 
-
+Department of Neurosciences "Rita Levi Montalcini", University of Torino
 
